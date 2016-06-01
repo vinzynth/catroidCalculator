@@ -71,7 +71,7 @@ public class CalculatorTest extends CalculatorUITestTemplate {
             solo.clickOnText(Integer.toString(i));
         }
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
-        solo.sleep(300);
+        solo.sleep(500);
         assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
     }
 

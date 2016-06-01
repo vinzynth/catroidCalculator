@@ -1,11 +1,16 @@
 package catrobat.calculator;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +23,11 @@ public class Calculator extends Activity implements OnClickListener {
     private TextView textViewResult;
     private boolean lastInputIsNumber = false;
     private boolean lastInputIsOperator = false;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,9 @@ public class Calculator extends Activity implements OnClickListener {
         textViewCalculation = (TextView) findViewById(R.id.calculation);
         textViewResult = (TextView) findViewById(R.id.res);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -88,9 +101,17 @@ public class Calculator extends Activity implements OnClickListener {
                     textViewCalculation.append(button.getText());
                     lastInputIsOperator = true;
                     break;
+                } else {
+                    replaceOperator(button.getText().toString());
                 }
         }
 
+    }
+
+    private void replaceOperator(String operator) {
+        String text = textViewCalculation.getText().toString();
+        final String s = text.substring(0, text.length() - 1) + operator;
+        textViewCalculation.setText(s);
     }
 
     private void computeResult() {
@@ -101,4 +122,43 @@ public class Calculator extends Activity implements OnClickListener {
         textViewResult.setText("");
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Calculator Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://catrobat.calculator/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Calculator Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://catrobat.calculator/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
 }
