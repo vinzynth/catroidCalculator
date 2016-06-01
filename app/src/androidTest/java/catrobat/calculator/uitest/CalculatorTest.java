@@ -21,8 +21,8 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         solo.clickOnText("-");
         solo.clickOnText("*");
         solo.clickOnText("/");
-        solo.clickOnText("C");
-        solo.clickOnText("=");
+        solo.clickOnText("AC");
+        solo.clickOnText("DEL");
 
     }
 
@@ -139,11 +139,23 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         for (int i = 0; i < 3; i++) {
             solo.clickOnText(Integer.toString(i));
         }
-        solo.clickOnText("=");
 
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.res);
         solo.sleep(500);
         assertEquals("Formula not correctly represented", "24", textView.getText().toString());
+    }
+
+    public void testDel() throws Exception {
+
+        typeNumbers();
+        solo.clickOnText("DEL");
+        solo.clickOnText("DEL");
+        solo.clickOnText("DEL");
+
+
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.res);
+        solo.sleep(500);
+        assertEquals("DEL does not work", "12", textView.getText().toString());
     }
 
 }

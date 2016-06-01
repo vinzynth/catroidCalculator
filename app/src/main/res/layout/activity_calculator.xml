@@ -49,8 +49,8 @@
         android:text="6"
         android:id="@+id/button_6"
         style="@style/ButtonStyle"
-        android:layout_below="@+id/button_3"
-        android:layout_toEndOf="@+id/button_2" />
+        android:layout_above="@+id/button_8"
+        android:layout_toEndOf="@+id/button_5" />
 
     <Button
         android:text="7"
@@ -63,15 +63,15 @@
         android:text="8"
         android:id="@+id/button_8"
         style="@style/ButtonStyle"
-        android:layout_below="@+id/button_5"
+        android:layout_alignTop="@+id/button_7"
         android:layout_toEndOf="@+id/button_7" />
 
     <Button
         android:text="9"
         android:id="@+id/button_9"
         style="@style/ButtonStyle"
-        android:layout_above="@+id/button_eq"
-        android:layout_alignStart="@+id/button_eq" />
+        android:layout_below="@+id/button_6"
+        android:layout_toEndOf="@+id/button_5" />
 
     <Button
         android:text="0"
@@ -82,18 +82,18 @@
 
 
     <Button
-        android:text="C"
-        android:id="@+id/button_c"
+        android:text="AC"
+        android:id="@+id/button_ac"
         style="@style/ButtonStyle"
         android:layout_below="@+id/button_7"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="="
-        android:id="@+id/button_eq"
+        android:text="DEL"
+        android:id="@+id/button_del"
         style="@style/ButtonStyle"
         android:layout_below="@+id/button_8"
-        android:layout_toEndOf="@+id/button_8" />
+        android:layout_toEndOf="@+id/button_0" />
 
 
     <Button
@@ -137,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
+        android:text="0"
         android:id="@+id/res"
         android:layout_above="@+id/button_3"
         android:layout_alignParentEnd="true" />

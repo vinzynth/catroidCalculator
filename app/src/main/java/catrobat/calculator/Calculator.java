@@ -17,7 +17,7 @@ import java.util.Collection;
 
 public class Calculator extends Activity implements OnClickListener {
 
-    private Button buttonPlus, buttonMinus, buttonDivide, buttonMultiply, buttonClear, buttonEquals;
+    private Button buttonPlus, buttonMinus, buttonDivide, buttonMultiply, buttonAC, buttonDEL;
     private Collection<Button> numberButtons;
     private TextView textViewCalculation;
     private TextView textViewResult;
@@ -38,17 +38,20 @@ public class Calculator extends Activity implements OnClickListener {
         buttonMinus = (Button) findViewById(R.id.button_sub);
         buttonDivide = (Button) findViewById(R.id.button_div);
         buttonMultiply = (Button) findViewById(R.id.button_mul);
-        buttonClear = (Button) findViewById(R.id.button_c);
-        buttonEquals = (Button) findViewById(R.id.button_eq);
+        buttonAC = (Button) findViewById(R.id.button_ac);
+        buttonDEL = (Button) findViewById(R.id.button_del);
 
         buttonPlus.setOnClickListener(this);
         buttonMinus.setOnClickListener(this);
         buttonDivide.setOnClickListener(this);
         buttonMultiply.setOnClickListener(this);
-        buttonClear.setOnClickListener(this);
-        buttonEquals.setOnClickListener(this);
+        buttonAC.setOnClickListener(this);
+        buttonDEL.setOnClickListener(this);
 
         numberButtons = new ArrayList<>();
+
+        textViewCalculation = (TextView) findViewById(R.id.calculation);
+        textViewResult = (TextView) findViewById(R.id.res);
 
         for (int i = 0; i < 10; i++) {
             String buttonName = "button_" + i;
@@ -59,13 +62,12 @@ public class Calculator extends Activity implements OnClickListener {
                 @Override
                 public void onClick(View view) {
                     numberClicked(number);
+                    computeResult();
                 }
             });
             numberButtons.add(button);
         }
 
-        textViewCalculation = (TextView) findViewById(R.id.calculation);
-        textViewResult = (TextView) findViewById(R.id.res);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -90,17 +92,26 @@ public class Calculator extends Activity implements OnClickListener {
         Button button = (Button) view;
 
         switch (button.getId()) {
-            case R.id.button_c:
+            case R.id.button_ac:
                 clearTextField();
                 break;
-            case R.id.button_eq:
-                computeResult();
+            case R.id.button_del:
+                deleteLastChar();
                 break;
             default:
                 addOperatorToTextView(button);
 
         }
 
+        computeResult();
+    }
+
+    private void deleteLastChar() {
+        String text = textViewCalculation.getText().toString();
+        if (!text.isEmpty()) {
+            String newText = text.substring(0, text.length() - 1);
+            textViewCalculation.setText(newText);
+        }
     }
 
     private void addOperatorToTextView(Button button) {
@@ -111,7 +122,6 @@ public class Calculator extends Activity implements OnClickListener {
         }
 
         boolean lastIsMinus = false;
-        boolean addMinus = true;
         String lastChar = "";
         if (!text.isEmpty())
             lastChar = text.substring(text.length() - 1, text.length());
@@ -159,6 +169,7 @@ public class Calculator extends Activity implements OnClickListener {
     }
 
     private void computeResult() {
+        textViewResult.setText(Integer.toString(Parser.doCalculation(textViewCalculation.getText().toString())));
     }
 
     private void clearTextField() {

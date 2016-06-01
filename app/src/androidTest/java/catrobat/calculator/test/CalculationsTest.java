@@ -69,5 +69,6 @@ public class CalculationsTest extends TestCase {
 
 
         assertEquals(Parser.doCalculation("3+4*5+6"), 29);
+        assertEquals(Parser.doCalculation(""), 0);
     }
 }

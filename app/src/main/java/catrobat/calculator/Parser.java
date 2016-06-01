@@ -8,6 +8,8 @@ package catrobat.calculator;
 public class Parser {
 
     public static int doCalculation(String text) {
+        if (text.isEmpty() || "-".equals(text))
+            return 0;
         // trim by operators
         String s = text;
         while (lastCharIsOperator(s))
