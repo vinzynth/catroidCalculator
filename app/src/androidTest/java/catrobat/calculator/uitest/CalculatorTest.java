@@ -61,6 +61,13 @@ public class CalculatorTest extends CalculatorUITestTemplate {
 
     public void testWriteFormula3() throws Exception {
 
+        typeNumbers();
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
+        solo.sleep(500);
+        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+    }
+
+    private void typeNumbers() {
         for (int i = 0; i < 3; i++) {
             solo.clickOnText(Integer.toString(i));
         }
@@ -70,6 +77,41 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         for (int i = 0; i < 3; i++) {
             solo.clickOnText(Integer.toString(i));
         }
+    }
+
+
+    public void testWriteFormula4() throws Exception {
+
+        solo.clickOnText("-");
+        typeNumbers();
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
+        solo.sleep(500);
+        assertEquals("Formula not correctly represented", "-12-12", textView.getText().toString());
+    }
+
+
+    public void testWriteFormula5() throws Exception {
+
+        solo.clickOnText("*");
+        typeNumbers();
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
+        solo.sleep(500);
+        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+    }
+
+    public void testWriteFormula6() throws Exception {
+
+        solo.clickOnText("+");
+        typeNumbers();
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
+        solo.sleep(500);
+        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+    }
+
+    public void testWriteFormula7() throws Exception {
+
+        solo.clickOnText("/");
+        typeNumbers();
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
         solo.sleep(500);
         assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());

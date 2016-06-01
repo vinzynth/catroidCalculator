@@ -97,15 +97,32 @@ public class Calculator extends Activity implements OnClickListener {
                 computeResult();
                 break;
             default:
-                if (!lastInputIsOperator) {
-                    textViewCalculation.append(button.getText());
-                    lastInputIsOperator = true;
-                    break;
-                } else {
-                    replaceOperator(button.getText().toString());
-                }
+                addOperatorToTextView(button);
+
         }
 
+    }
+
+    private void addOperatorToTextView(Button button) {
+        boolean isMinus = "-".equals(button.getText());
+
+        boolean lastIsMinus = false;
+        boolean addMinus = true;
+        String text = textViewCalculation.getText().toString();
+        String lastChar = text.substring(text.length() - 1, text.length());
+        lastIsMinus = "-".equals(lastChar);
+
+        if (text.isEmpty() && !isMinus)
+            return;
+
+
+        if (!lastInputIsOperator) {
+            textViewCalculation.append(button.getText());
+            lastInputIsOperator = true;
+        } else {
+            if (lastIsMinus)
+                replaceOperator(button.getText().toString());
+        }
     }
 
     private void replaceOperator(String operator) {
