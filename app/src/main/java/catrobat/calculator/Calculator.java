@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +14,10 @@ public class Calculator extends Activity implements OnClickListener {
 
     private Button buttonPlus, buttonMinus, buttonDivide, buttonMultiply, buttonClear, buttonEquals;
     private Collection<Button> numberButtons;
+    private TextView textViewCalculation;
+    private TextView textViewResult;
+    private boolean lastInputIsNumber = false;
+    private boolean lastInputIsOperator = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +44,61 @@ public class Calculator extends Activity implements OnClickListener {
             String buttonName = "button_" + i;
             int id = getResources().getIdentifier(buttonName, "id", R.class.getPackage().getName());
             Button button = (Button) findViewById(id);
-            button.setOnClickListener(this);
+            final int number = i;
+            button.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    numberClicked(number);
+                }
+            });
             numberButtons.add(button);
         }
+
+        textViewCalculation = (TextView) findViewById(R.id.calculation);
+        textViewResult = (TextView) findViewById(R.id.res);
+
+    }
+
+
+    public void numberClicked(int i) {
+        boolean empty = textViewCalculation.getText().length() <= 0;
+        if (i == 0 && (empty || !lastInputIsNumber))
+            return;
+        textViewCalculation.append(Integer.toString(i));
+        lastInputIsNumber = true;
+        lastInputIsOperator = false;
 
     }
 
 
     @Override
     public void onClick(View view) {
+        lastInputIsNumber = false;
+        Button button = (Button) view;
+
+        switch (button.getId()) {
+            case R.id.button_c:
+                clearTextField();
+                break;
+            case R.id.button_eq:
+                computeResult();
+                break;
+            default:
+                if (!lastInputIsOperator) {
+                    textViewCalculation.append(button.getText());
+                    lastInputIsOperator = true;
+                    break;
+                }
+        }
 
     }
+
+    private void computeResult() {
+    }
+
+    private void clearTextField() {
+        textViewCalculation.setText("");
+        textViewResult.setText("");
+    }
+
 }
