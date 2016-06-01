@@ -64,7 +64,7 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         typeNumbers();
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
         solo.sleep(500);
-        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+        assertEquals("Formula not correctly represented", "12*-12", textView.getText().toString());
     }
 
     private void typeNumbers() {
@@ -86,7 +86,7 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         typeNumbers();
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
         solo.sleep(500);
-        assertEquals("Formula not correctly represented", "-12-12", textView.getText().toString());
+        assertEquals("Formula not correctly represented", "-12*-12", textView.getText().toString());
     }
 
 
@@ -96,7 +96,7 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         typeNumbers();
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
         solo.sleep(500);
-        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+        assertEquals("Formula not correctly represented", "12*-12", textView.getText().toString());
     }
 
     public void testWriteFormula6() throws Exception {
@@ -105,7 +105,7 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         typeNumbers();
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
         solo.sleep(500);
-        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+        assertEquals("Formula not correctly represented", "12*-12", textView.getText().toString());
     }
 
     public void testWriteFormula7() throws Exception {
@@ -114,8 +114,36 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         typeNumbers();
         TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
         solo.sleep(500);
-        assertEquals("Formula not correctly represented", "12-12", textView.getText().toString());
+        assertEquals("Formula not correctly represented", "12*-12", textView.getText().toString());
     }
 
+    public void testWriteFormula8() throws Exception {
+
+        typeNumbers();
+        solo.clickOnText("*");
+        solo.clickOnText("-");
+        solo.clickOnText("/");
+
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.calculation);
+        solo.sleep(500);
+        assertEquals("Formula not correctly represented", "12*-12/", textView.getText().toString());
+    }
+
+    public void testCalculateAdd() throws Exception {
+
+        for (int i = 0; i < 3; i++) {
+            solo.clickOnText(Integer.toString(i));
+        }
+        solo.clickOnText("+");
+
+        for (int i = 0; i < 3; i++) {
+            solo.clickOnText(Integer.toString(i));
+        }
+        solo.clickOnText("=");
+
+        TextView textView = (TextView) solo.getCurrentActivity().findViewById(R.id.res);
+        solo.sleep(500);
+        assertEquals("Formula not correctly represented", "24", textView.getText().toString());
+    }
 
 }

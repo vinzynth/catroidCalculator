@@ -105,30 +105,57 @@ public class Calculator extends Activity implements OnClickListener {
 
     private void addOperatorToTextView(Button button) {
         boolean isMinus = "-".equals(button.getText());
+        String text = textViewCalculation.getText().toString();
+        if (text.isEmpty() && !isMinus) {
+            return;
+        }
 
         boolean lastIsMinus = false;
         boolean addMinus = true;
-        String text = textViewCalculation.getText().toString();
-        String lastChar = text.substring(text.length() - 1, text.length());
+        String lastChar = "";
+        if (!text.isEmpty())
+            lastChar = text.substring(text.length() - 1, text.length());
         lastIsMinus = "-".equals(lastChar);
 
-        if (text.isEmpty() && !isMinus)
+
+        if (lastIsMinus && isMinus)
             return;
 
 
-        if (!lastInputIsOperator) {
+        if (!lastInputIsOperator || isMinus) {
             textViewCalculation.append(button.getText());
             lastInputIsOperator = true;
+
         } else {
-            if (lastIsMinus)
-                replaceOperator(button.getText().toString());
+            replaceOperator(button.getText().toString());
         }
     }
 
     private void replaceOperator(String operator) {
         String text = textViewCalculation.getText().toString();
-        final String s = text.substring(0, text.length() - 1) + operator;
-        textViewCalculation.setText(s);
+        String newText = text;
+        while (true) {
+            if (lastCharIsOperator()) {
+                text = textViewCalculation.getText().toString();
+                newText = text.substring(0, text.length() - 1);
+                textViewCalculation.setText(newText);
+            } else {
+                break;
+            }
+        }
+        newText = newText + operator;
+        textViewCalculation.setText(newText);
+    }
+
+    private boolean lastCharIsOperator() {
+        String text = textViewCalculation.getText().toString();
+        String lastChar = "";
+        if (!text.isEmpty())
+            lastChar = text.substring(text.length() - 1, text.length());
+        if ("-".equals(lastChar) || "+".equals(lastChar) || "*".equals(lastChar) || "/".equals(lastChar))
+            return true;
+
+        return false;
     }
 
     private void computeResult() {
