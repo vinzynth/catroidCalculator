@@ -2,6 +2,8 @@ package catrobat.calculator.uitest;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.robotium.solo.Solo;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -12,23 +14,23 @@ import catrobat.calculator.Calculator;
  *
  * Sample Testcase
  */
-public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator> {
+public class CalculatorUITestTemplate extends ActivityInstrumentationTestCase2<Calculator> {
 
-    public CalculatorTest() {
+    public CalculatorUITestTemplate() {
         super(Calculator.class);
     }
 
+    protected Solo solo;
+
     @Before
     public void setUp() throws Exception {
-
-    }
-
-    public void test01() throws Exception {
+        super.setUp();
+        solo = new Solo(getInstrumentation(), getActivity());
 
     }
 
     @After
     public void tearDown() throws Exception {
-
+        super.tearDown();
     }
 }
