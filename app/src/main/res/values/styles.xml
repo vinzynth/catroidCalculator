@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:layout_width">80dip</item>
+        <item name="android:layout_height">80dip</item>
+    </style>
+
 </resources>
