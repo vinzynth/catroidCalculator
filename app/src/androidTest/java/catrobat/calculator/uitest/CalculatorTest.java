@@ -21,4 +21,17 @@ public class CalculatorTest extends CalculatorUITestTemplate {
         solo.clickOnText("=");
 
     }
+
+    public void testWriteFormula() throws Exception {
+
+        for (int i = 0; i < 10; i++) {
+            solo.clickOnText(Integer.toString(i));
+        }
+        solo.clickOnText("+");
+        for (int i = 0; i < 10; i++) {
+            solo.clickOnText(Integer.toString(i));
+        }
+
+        assertTrue("Formula not correctly represented", solo.searchText("123456789+123456789"));
+    }
 }
