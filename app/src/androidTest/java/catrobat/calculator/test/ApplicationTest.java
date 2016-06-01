@@ -1,4 +1,4 @@
-package catrobat.calculator;
+package catrobat.calculator.test;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
