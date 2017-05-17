@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "catrobat.calculator"
@@ -17,6 +17,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+
+            resources {
+                srcDir 'src/main/res'
+            }
+
+        }
+
+        androidTest {
+            if (file('../testexclusions.txt').exists()) {
+                java.exclude file('../testexclusions.txt').readLines()
+            }
+        }
+    }	
 }
 
 dependencies {
@@ -25,4 +44,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.jayway.android.robotium:robotium-solo:5.5.4'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+
+    testCompile 'junit:junit:4.12'
+    testCompile('com.google.truth:truth:0.25') {
+        exclude group: 'junit' // Android has JUnit built in
+    }
 }
